@@ -26,9 +26,6 @@ frame= Frame()
 frame.configure(bg="white")
 frame.pack()
 
-'''new_window= Frame()
-new_window.configure(bg="white")
-new_window.pack()'''
 
 
 # labels that will be fit into frame
