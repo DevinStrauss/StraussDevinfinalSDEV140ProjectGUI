@@ -18,7 +18,7 @@ to create an account that allows them to log in
 # creates empty window for frame and widgets to be applied to
 root=Tk()
 root.title("Login Screen")
-root.geometry("900x750")
+root.geometry("900x850")
 root.configure(bg="white")
 
 # creates frame that the widgets will fit into
