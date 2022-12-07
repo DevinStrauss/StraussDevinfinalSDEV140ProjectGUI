@@ -110,7 +110,7 @@ def user_not_found(): # function that is called when ther username entry is not 
     usernot_foundlabel.image=img2 # references the image again, the image was not showing up and after research I found that the image got garbage collected leaving no reference to it. This line attaches a reference to the image
     usernot_foundlabel2= Label(user_not_found_screen, bg="white", text="User not found. Please create new account.") # label that shows text that user is not found
     usernot_foundlabel2.grid(row=1, column=2)
-    leave_button= Button(user_not_found_screen, text="Return to Login", command=delete_user_not_found_screen) # button that calls function from above to close the current window which will return to login screen
+    leave_button= Button(user_not_found_screen, fg="red", text="Return to Login", command=delete_user_not_found_screen) # button that calls function from above to close the current window which will return to login screen
     leave_button.grid(row=2, column=2)
 
 
