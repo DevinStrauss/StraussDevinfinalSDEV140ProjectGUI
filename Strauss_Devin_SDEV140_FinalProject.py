@@ -1,4 +1,4 @@
-import os
+import os # allows for the usernames and passwords to be written to and retrieved from the directory
 from tkinter import *
 from tkinter import messagebox
 from PIL import ImageTk, Image
@@ -18,7 +18,7 @@ to create an account that allows them to log in
 # creates empty window for frame and widgets to be applied to
 root=Tk()
 root.title("Login Screen")
-root.geometry("900x750")
+root.geometry("900x850")
 root.configure(bg="white")
 
 # creates frame that the widgets will fit into
@@ -113,7 +113,7 @@ def user_not_found(): # function that is called when ther username entry is not 
     usernot_foundlabel.image=img2 # references the image again, the image was not showing up and after research I found that the image got garbage collected leaving no reference to it. This line attaches a reference to the image
     usernot_foundlabel2= Label(user_not_found_screen, bg="white", text="User not found. Please create new account.") # label that shows text that user is not found
     usernot_foundlabel2.grid(row=1, column=2)
-    leave_button= Button(user_not_found_screen, text="Return to Login", command=delete_user_not_found_screen) # button that calls function from above to close the current window which will return to login screen
+    leave_button= Button(user_not_found_screen, fg="red", text="Return to Login", command=delete_user_not_found_screen) # button that calls function from above to close the current window which will return to login screen
     leave_button.grid(row=2, column=2)
 
 
@@ -163,17 +163,17 @@ def create_user(): # function that will be called by create account button
 
     # function that the "finished" button below will call in order to store username and password
     def createnew_account():
-        username_input= username.get() # gets username entry in order to write it to file
-        password_input= password.get() # gets password entry in order to write it to file
+        username_input= username.get() # gets username entry in order to write it to the current directory using the import os module at the top of this code
+        password_input= password.get() # gets password entry in order to write it to the current directory using the import os module at the top of this code
 
-        f= open(username_input, "w") # opens a file using "w" for write
-        f.write(username_input + "\n") # writes username on a new line and writes it to created file
-        f.write(password_input) # writes password to file opened previously
-        f.close() # closes the file after username and password is written to the file
+        f= open(username_input, "w") # "w" gives permissions to write the username retrieved from line 166 to the directory using import os module
+        f.write(username_input + "\n") # uses the "w" permission to write the username and then enter a new line in order to write the password that will be retrieved below
+        f.write(password_input) # writes the password retrieved from line 167 on the new created in line from line 170
+        f.close() # closes the process that was opened in line 169
 
         # clears out the entry field
-        createuser_entry.delete(0, END)
-        createpass_entry.delete(0, END)
+        createuser_entry.delete(0, END) # clears out the username entry
+        createpass_entry.delete(0, END) # clears out the password entry
 
         # label and message box that confirm account was created successfully
         Label(create_window, text="Account created successfully", fg="blue", font="Arial, 12").grid(row=6, column=1, pady=20) # label that appears to let user know account was created successfully
@@ -238,3 +238,4 @@ show_password.grid(row=5, column=3) # places the checkbox onto the frame using t
 
 
 root.mainloop() # starts the GUI application
+
