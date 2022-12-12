@@ -10,7 +10,8 @@ Last Date Modified: 12/2/2022
 This program is a GUI application that will run as a log in screen for a user. It will allow them to log in with
 a username and password. It will direct them to a page that tells them they have successfully logged in. If the user 
 needs to create a new account then the "create new account" will bring up a new window to have the user enter their information
-to create an account that allows them to log in
+to create an account that allows them to log in. This account is then stored in the current directory and is accessed when
+a user attempts to log in. 
 
 '''
 
@@ -46,11 +47,11 @@ password_label= Label(frame, text="Password")
 password_label.configure(fg="black", bg= "white", font="Arial, 15",relief="solid")
 password_label.grid(row=5, column=1, sticky=W, pady=4, padx=10)
 
-# entry fields where user can enter their username and password
+# global variables that can be accessed throughout the entire application
 global username_success
 global password_success
 
- # creates a variable that the username and password entries can recognize
+ # creates a variable allows the username and password to be recognized as values within widgets
 username_success = StringVar()
 password_success = StringVar()
 
@@ -58,7 +59,7 @@ password_success = StringVar()
 username_entry= Entry(frame, textvariable=username_success, bd=5, width=20) # creates the entry field and customizes the size and appearance of the entry field
 username_entry.grid(row=4, column= 2, pady=20) # assigns the area that the entry field will be placed on the frame
 password_entry= Entry(frame, textvariable=password_success, bd = 5, show="*") # creates an entry field for the password and also customizes the password entry to be hidden)
-password_entry.grid(row=5, column=2, pady=20)
+password_entry.grid(row=5, column=2, pady=20) # assigns the area that the entry field will be placed on the frame
 
 
 # button functions
@@ -68,9 +69,10 @@ def login_function(): #function that will be called by the login button
     username_entry.delete(0, END) # clears out the entry fields after a successful log in
     password_entry.delete(0, END)
 
-    list_of_files = os.listdir() # this method allows the list of usernames and passwords in the directory to be referred to
+ # os.listdir() method allows the usernames and passwords in the current directory to be referred to and matched for the if statement written
+    list_of_files = os.listdir() #
     if username1 in list_of_files:
-        file1 = open(username1, "r") # opens the files from the directory and reads them using "r" and then matches them to allow access or not
+        file1 = open(username1, "r") # opens the files from the directory and reads them using "r" and then matches the username and password in the file to allow access or not
         verify = file1.read().splitlines() # since the directories are stored using two separate lines (username, password) .splitlines is used to distinguish the two
         if password1 in verify: # if statement that allows access based on the password in the directory
             messagebox.showinfo(title="Login Success", message="You have successfully logged in.")
@@ -134,13 +136,13 @@ def create_user(): # function that will be called by create account button
     create_window.configure(bg="white")
     create_window.geometry("600x550")
 
-    # global allows access to these varibales throughout the program
+    # global allows access to these variables throughout the program
     global username
     global password
     global username_entry
     global password_entry
 
-    # identifies these variables as strings even if integers are used in the entry fields
+    ## creates a variable allows the created username and password to be recognized as values within widgets
     username = StringVar()
     password = StringVar()
 
@@ -187,7 +189,7 @@ def create_user(): # function that will be called by create account button
     exit_button= Button(create_window, text="Return to Login", width=10, height=1, fg="red", command=create_window.destroy)
     exit_button.grid(row=5, column=1, pady=20)
 
-    show_me = IntVar(value=0)  # variable that will be used within the checkbox button
+    show_me = IntVar(value=0)  # setting this variable to be called and it will be used within the checkbox button to determine what happens when the checkbox is checked or unchecked
 
     def show_pass():  # function that is used for the checkbox to either reveal or hide password
         if (show_me.get() == 1):  # applies the variable assigned to the checkbox
@@ -195,8 +197,7 @@ def create_user(): # function that will be called by create account button
         else:
             createpass_entry.config(show='*') # if checkbox is unchecked then the password will appear at asterisks
 
-    show_password = Checkbutton(create_window, text="Show Password", variable=show_me, onvalue=1, offvalue=0,
-                                command=show_pass)  # creates a checkbox that uses the show_me variable to activate the function that is assigned to this button
+    show_password = Checkbutton(create_window, text="Show Password", variable=show_me, onvalue=1, offvalue=0, command=show_pass)  # creates a checkbox that uses the show_me variable to activate the function that is assigned to this button
     show_password.grid(row=3, column=2)  # places the checkbox onto the frame using the grid layout
 
 
@@ -212,7 +213,7 @@ quitButton = Button(frame, text="Exit", command=frame.quit) # button that will c
 quitButton.grid(row=9, column= 2, pady=20)
 
 
-show_me= IntVar(value=0) # variable that will be used within the checkbox button
+show_me= IntVar(value=0) # re-using the variable from above
 
 def show_pass(): #function that is used for the checkbox to either reveal or hide password
     if (show_me.get() == 1): # applies the variable assigned to the checkbox
